@@ -15,6 +15,13 @@
   --warn: #8a4b00;
   --warn-bg: #fff3dc;
   --warn-line: #d9962b;
+  --on-cat: #ffffff;
+  --official: #0f5c73; --official-bg: #e1f0f4; --official-line: #a9cdd8;
+  --classics: #7a5a00; --classics-bg: #f7efd6; --classics-line: #dcc88a;
+  --nonfic: #2f7a3a; --nonfic-bg: #e3f3e5; --nonfic-line: #a8d4ae;
+  --festival: #b02a79; --festival-bg: #fbe6f1; --festival-line: #e6a9cb;
+  --leguin: #5a43b5; --leguin-bg: #ece8fa; --leguin-line: #c2b8ee;
+  --other: #4b5a66; --other-bg: #e9edf0; --other-line: #bcc7cf;
   --font-display: "Newsreader", Georgia, "Times New Roman", serif;
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
@@ -31,6 +38,13 @@
     --warn: #ffc266;
     --warn-bg: #2b2212;
     --warn-line: #b8832f;
+    --on-cat: #0e1a21;
+    --official: #6cc3da; --official-bg: #14303a; --official-line: #2c5666;
+    --classics: #e6c15a; --classics-bg: #2e2610; --classics-line: #5e4d1f;
+    --nonfic: #86d393; --nonfic-bg: #15301b; --nonfic-line: #2b5a35;
+    --festival: #ff8fc8; --festival-bg: #36162a; --festival-line: #6a2d51;
+    --leguin: #b4a9ff; --leguin-bg: #231f47; --leguin-line: #453f82;
+    --other: #b9c4cd; --other-bg: #1f2a31; --other-line: #3d4b55;
     color-scheme: dark;
   }
 }
@@ -46,6 +60,13 @@
   --warn: #ffc266;
   --warn-bg: #2b2212;
   --warn-line: #b8832f;
+  --on-cat: #0e1a21;
+  --official: #6cc3da; --official-bg: #14303a; --official-line: #2c5666;
+  --classics: #e6c15a; --classics-bg: #2e2610; --classics-line: #5e4d1f;
+  --nonfic: #86d393; --nonfic-bg: #15301b; --nonfic-line: #2b5a35;
+  --festival: #ff8fc8; --festival-bg: #36162a; --festival-line: #6a2d51;
+  --leguin: #b4a9ff; --leguin-bg: #231f47; --leguin-line: #453f82;
+  --other: #b9c4cd; --other-bg: #1f2a31; --other-line: #3d4b55;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -78,7 +99,7 @@ h2 {
 ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .mtg {
   display: flex; gap: 16px; align-items: flex-start;
-  background: var(--surface); border: 1px solid var(--line);
+  background: var(--cat-bg, var(--surface)); border: 1px solid var(--cat-line, var(--line));
   border-radius: 8px; padding: 14px 16px;
 }
 .mtg.past { opacity: 0.55; }
@@ -87,7 +108,7 @@ ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: col
 .day-line { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .date-num {
   font-family: var(--font-display); font-size: 1.9rem; line-height: 1.05;
-  font-weight: 600; color: var(--accent); font-variant-numeric: tabular-nums;
+  font-weight: 600; color: var(--cat, var(--accent)); font-variant-numeric: tabular-nums;
 }
 .what { flex: 1 1 0; min-width: 0; }
 .title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; line-height: 1.25; margin: 0 0 4px; }
@@ -107,10 +128,27 @@ ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: col
 .badge.festival { color: var(--accent); border-color: var(--accent); }
 .date-num.range { font-size: 1.45rem; line-height: 1.2; white-space: nowrap; }
 .mtg.festival .when { flex-basis: 5.2rem; }
+.when.wide { flex-basis: 5.2rem; }
 .loc { margin: 0 0 2px; color: var(--fg); }
 .loc::before { content: "Location: "; color: var(--muted); }
 .accom { margin: 0 0 2px; color: var(--fg); }
 .accom::before { content: "Accommodation: "; color: var(--muted); }
+.cat-official { --cat: var(--official); --cat-bg: var(--official-bg); --cat-line: var(--official-line); --cat-label: "Official read"; }
+.cat-classics { --cat: var(--classics); --cat-bg: var(--classics-bg); --cat-line: var(--classics-line); --cat-label: "Classics Society"; }
+.cat-nonfic { --cat: var(--nonfic); --cat-bg: var(--nonfic-bg); --cat-line: var(--nonfic-line); --cat-label: "Nonfiction Faction"; }
+.cat-festival { --cat: var(--festival); --cat-bg: var(--festival-bg); --cat-line: var(--festival-line); --cat-label: "Festival"; }
+.cat-leguin { --cat: var(--leguin); --cat-bg: var(--leguin-bg); --cat-line: var(--leguin-line); --cat-label: "Le Guin side quest"; }
+.cat-other { --cat: var(--other); --cat-bg: var(--other-bg); --cat-line: var(--other-line); --cat-label: "Other event"; }
+.mtg[class*="cat-"] .what::before {
+  content: var(--cat-label); display: inline-block; margin: 0 6px 6px 0; padding: 1px 6px;
+  border-radius: 4px; background: var(--cat); color: var(--on-cat);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; vertical-align: top;
+}
+.legend { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+.key {
+  padding: 2px 8px; border-radius: 4px; background: var(--cat); color: var(--on-cat);
+  font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+}
 .badge {
   display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--next); border: 1px solid var(--next);
@@ -128,12 +166,20 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
     <p class="eyebrow">Mother City Book Club</p>
     <h1>2027 reading calendar</h1>
     <p class="sub">Dates, books and venues for the year. This page is updated as plans change, so check back for the latest.</p>
+    <div class="legend">
+      <span class="key cat-official">Official reads</span>
+      <span class="key cat-classics">Classics Society</span>
+      <span class="key cat-nonfic">Nonfiction Faction</span>
+      <span class="key cat-festival">Festivals</span>
+      <span class="key cat-leguin">Le Guin side quest</span>
+      <span class="key cat-other">Other events</span>
+    </div>
   </header>
 
   <main>
     <h2>January</h2>
     <ul>
-      <li class="mtg" data-end="2027-01-23">
+      <li class="mtg cat-leguin" data-end="2027-01-23">
         <div class="when"><div class="day-line">Sat</div><div class="date-num">23</div></div>
         <div class="what">
           <h3 class="title">The Left Hand of Darkness</h3>
@@ -147,7 +193,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
 
     <h2>February</h2>
     <ul>
-      <li class="mtg" data-end="2027-02-07">
+      <li class="mtg cat-official" data-end="2027-02-07">
         <div class="when"><div class="day-line">Feb</div><div class="date-num">6/7</div></div>
         <div class="what">
           <h3 class="title">The Tempest</h3>
@@ -157,7 +203,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
           <p class="note">Witches' picnic before the production, to discuss the play.</p>
         </div>
       </li>
-      <li class="mtg" data-end="2027-02-20">
+      <li class="mtg cat-official" data-end="2027-02-20">
         <div class="when"><div class="day-line">Sat</div><div class="date-num">20</div></div>
         <div class="what">
           <h3 class="title">The Sound and the Fury</h3>
@@ -166,7 +212,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
           <p class="venue">Womanzone, Artscape</p>
         </div>
       </li>
-      <li class="mtg potential" data-end="2027-02-27">
+      <li class="mtg potential cat-classics" data-end="2027-02-27">
         <div class="when"><div class="day-line">Sat</div><div class="date-num">27</div></div>
         <div class="what">
           <span class="badge potential">Potential date</span>
@@ -181,7 +227,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
 
     <h2>March</h2>
     <ul>
-      <li class="mtg" data-end="2027-03-06">
+      <li class="mtg cat-official" data-end="2027-03-06">
         <div class="when"><div class="day-line">Sat</div><div class="date-num">6</div></div>
         <div class="what">
           <h3 class="title">Official read</h3>
@@ -189,7 +235,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
           <p class="venue">Womanzone, Artscape</p>
         </div>
       </li>
-      <li class="mtg potential" data-end="2027-03-13">
+      <li class="mtg potential cat-classics" data-end="2027-03-13">
         <div class="when"><div class="day-line">Sat</div><div class="date-num">13</div></div>
         <div class="what">
           <span class="badge potential">Potential date</span>
@@ -200,10 +246,9 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
           <p class="note">Either 13 March or 27 February. Date to be confirmed.</p>
         </div>
       </li>
-      <li class="mtg festival" data-end="2027-03-21">
+      <li class="mtg festival cat-festival" data-end="2027-03-21">
         <div class="when"><div class="day-line">Fri–Sun</div><div class="date-num range">19–21</div></div>
         <div class="what">
-          <span class="badge festival">Festival</span>
           <h3 class="title">Books on the Bay</h3>
           <p class="loc">Simon's Town</p>
         </div>
@@ -211,7 +256,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
     </ul>
     <h2>April</h2>
     <ul>
-      <li class="mtg" data-end="2027-04-03">
+      <li class="mtg cat-official" data-end="2027-04-03">
         <div class="when"><div class="day-line">Sat</div><div class="date-num">3</div></div>
         <div class="what">
           <h3 class="title">Official read</h3>
@@ -224,7 +269,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
 
     <h2>May</h2>
     <ul>
-      <li class="mtg" data-end="2027-05-01">
+      <li class="mtg cat-official" data-end="2027-05-01">
         <div class="when"><div class="day-line">Sat</div><div class="date-num">1</div></div>
         <div class="what">
           <h3 class="title">Official read</h3>
@@ -233,10 +278,9 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
           <p class="venue tbc">To be confirmed</p>
         </div>
       </li>
-      <li class="mtg festival" data-end="2027-05-16">
+      <li class="mtg festival cat-festival" data-end="2027-05-16">
         <div class="when"><div class="day-line">Fri–Sun</div><div class="date-num range">14–16</div></div>
         <div class="what">
-          <span class="badge festival">Festival</span>
           <h3 class="title">Franschhoek Literary Festival</h3>
           <p class="loc">Franschhoek</p>
           <p class="accom">Organised by Ann-Maree</p>
@@ -246,12 +290,12 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
 
     <h2>June</h2>
     <ul>
-      <li class="mtg no-host" data-end="2027-06-05">
+      <li class="mtg cat-official" data-end="2027-06-05">
         <div class="when"><div class="day-line">Sat</div><div class="date-num">5</div></div>
         <div class="what">
           <h3 class="title">Official read</h3>
           <p class="author">Book to be announced</p>
-          <p class="needs-host">Host needed</p>
+          <p class="host">Asiphe</p>
           <p class="venue">Womanzone, Artscape</p>
         </div>
       </li>
@@ -259,12 +303,12 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
 
     <h2>July</h2>
     <ul>
-      <li class="mtg" data-end="2027-07-03">
+      <li class="mtg cat-official" data-end="2027-07-03">
         <div class="when"><div class="day-line">Sat</div><div class="date-num">3</div></div>
         <div class="what">
           <h3 class="title">Official read</h3>
           <p class="author">Book to be announced</p>
-          <p class="host">Samantha</p>
+          <p class="host">Robyn</p>
           <p class="venue tbc">To be confirmed</p>
         </div>
       </li>
@@ -272,7 +316,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
 
     <h2>August</h2>
     <ul>
-      <li class="mtg" data-end="2027-08-14">
+      <li class="mtg cat-official" data-end="2027-08-14">
         <div class="when"><div class="day-line">Sat</div><div class="date-num">14</div></div>
         <div class="what">
           <h3 class="title">Official read</h3>
@@ -285,15 +329,14 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
 
     <h2>September</h2>
     <ul>
-      <li class="mtg festival" data-end="2027-09-05">
+      <li class="mtg festival cat-festival" data-end="2027-09-05">
         <div class="when"><div class="day-line">Fri–Sun</div><div class="date-num range">3–5</div></div>
         <div class="what">
-          <span class="badge festival">Festival</span>
           <h3 class="title">Open Book Festival</h3>
           <p class="loc">Cape Town</p>
         </div>
       </li>
-      <li class="mtg" data-end="2027-09-11">
+      <li class="mtg cat-official" data-end="2027-09-11">
         <div class="when"><div class="day-line">Sat</div><div class="date-num">11</div></div>
         <div class="what">
           <h3 class="title">Official read</h3>
@@ -306,7 +349,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
 
     <h2>October</h2>
     <ul>
-      <li class="mtg" data-end="2027-10-02">
+      <li class="mtg cat-official" data-end="2027-10-02">
         <div class="when"><div class="day-line">Sat</div><div class="date-num">2</div></div>
         <div class="what">
           <h3 class="title">Official read</h3>
@@ -319,7 +362,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
 
     <h2>November</h2>
     <ul>
-      <li class="mtg" data-end="2027-11-06">
+      <li class="mtg cat-official" data-end="2027-11-06">
         <div class="when"><div class="day-line">Sat</div><div class="date-num">6</div></div>
         <div class="what">
           <h3 class="title">Official read</h3>
@@ -328,15 +371,25 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
           <p class="venue">Womanzone, Artscape</p>
         </div>
       </li>
+      <li class="mtg potential cat-other" data-end="2027-11-14">
+        <div class="when wide"><div class="day-line">Weekend</div><div class="date-num range">13/14</div></div>
+        <div class="what">
+          <span class="badge potential">Tentative</span>
+          <h3 class="title">Booker Prize Soiree</h3>
+          <p class="host">Ann-Maree</p>
+          <p class="venue tbc">To be confirmed</p>
+          <p class="note">Second weekend of November, either 13 or 14 November.</p>
+        </div>
+      </li>
     </ul>
     <h2>December</h2>
     <ul>
-      <li class="mtg no-host" data-end="2027-12-04">
+      <li class="mtg cat-official" data-end="2027-12-04">
         <div class="when"><div class="day-line">Sat</div><div class="date-num">4</div></div>
         <div class="what">
           <h3 class="title">Official read</h3>
           <p class="author">Book to be announced</p>
-          <p class="needs-host">Host needed</p>
+          <p class="host">Samantha</p>
           <p class="venue tbc">To be confirmed</p>
           <p class="note">Bookmas.</p>
         </div>
@@ -344,7 +397,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
     </ul>
     <h2>Side quest: Nonfiction Faction</h2>
     <ul>
-      <li class="mtg potential">
+      <li class="mtg potential cat-nonfic">
         <div class="what">
           <span class="badge potential">Dates pending</span>
           <h3 class="title">The Communist Manifesto / Das Kapital</h3>
@@ -353,7 +406,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
           <p class="note">Paired with a book binding session. Emma inspiring the bookbinding.</p>
         </div>
       </li>
-      <li class="mtg potential">
+      <li class="mtg potential cat-nonfic">
         <div class="what">
           <span class="badge potential">Dates pending</span>
           <h3 class="title">Say Nothing</h3>
@@ -361,7 +414,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
           <p class="host">Ann-Maree (to be confirmed)</p>
         </div>
       </li>
-      <li class="mtg potential">
+      <li class="mtg potential cat-nonfic">
         <div class="what">
           <span class="badge potential">Dates pending</span>
           <h3 class="title">James Baldwin nonfiction</h3>
@@ -374,14 +427,14 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
 
     <h2>Ongoing side quests</h2>
     <ul>
-      <li class="mtg">
+      <li class="mtg cat-classics">
         <div class="what">
           <h3 class="title">Classics Society</h3>
           <p class="host">Ashleigh</p>
           <p class="note">Sessions in Q2, Q3 and Q4. Dates to follow.</p>
         </div>
       </li>
-      <li class="mtg">
+      <li class="mtg cat-leguin">
         <div class="what">
           <h3 class="title">Daughters of Earthsea</h3>
           <p class="author">Ursula K. Le Guin</p>
@@ -392,14 +445,14 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
     </ul>
     <h2>Festivals</h2>
     <ul>
-      <li class="mtg festival">
+      <li class="mtg festival cat-festival">
         <div class="when"><div class="day-line">Mar, Fri–Sun</div><div class="date-num range">19–21</div></div>
         <div class="what">
           <h3 class="title">Books on the Bay</h3>
           <p class="loc">Simon's Town</p>
         </div>
       </li>
-      <li class="mtg festival">
+      <li class="mtg festival cat-festival">
         <div class="when"><div class="day-line">May, Fri–Sun</div><div class="date-num range">14–16</div></div>
         <div class="what">
           <h3 class="title">Franschhoek Literary Festival</h3>
@@ -407,7 +460,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
           <p class="accom">Organised by Ann-Maree</p>
         </div>
       </li>
-      <li class="mtg festival">
+      <li class="mtg festival cat-festival">
         <div class="when"><div class="day-line">Sep, Fri–Sun</div><div class="date-num range">3–5</div></div>
         <div class="what">
           <h3 class="title">Open Book Festival</h3>
@@ -417,7 +470,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
     </ul>
   </main>
 
-  <footer>Last updated 24 November 2026. Books and venues for the later months will be added as they are chosen. Dates shaded amber still need a host.</footer>
+  <footer>Last updated 24 November 2026. Books and venues for the later months will be added as they are chosen.</footer>
 </div>
 
 <script>
