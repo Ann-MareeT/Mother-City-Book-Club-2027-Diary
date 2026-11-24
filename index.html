@@ -104,6 +104,13 @@ ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: col
 .venue::before { content: "Venue: "; color: var(--muted); }
 .venue.tbc { color: var(--muted); font-style: italic; }
 .note { margin: 6px 0 0; font-size: 14px; color: var(--muted); }
+.badge.festival { color: var(--accent); border-color: var(--accent); }
+.date-num.range { font-size: 1.45rem; line-height: 1.2; white-space: nowrap; }
+.mtg.festival .when { flex-basis: 5.2rem; }
+.loc { margin: 0 0 2px; color: var(--fg); }
+.loc::before { content: "Location: "; color: var(--muted); }
+.accom { margin: 0 0 2px; color: var(--fg); }
+.accom::before { content: "Accommodation: "; color: var(--muted); }
 .badge {
   display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--next); border: 1px solid var(--next);
@@ -193,6 +200,14 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
           <p class="note">Either 13 March or 27 February. Date to be confirmed.</p>
         </div>
       </li>
+      <li class="mtg festival" data-end="2027-03-21">
+        <div class="when"><div class="day-line">Fri–Sun</div><div class="date-num range">19–21</div></div>
+        <div class="what">
+          <span class="badge festival">Festival</span>
+          <h3 class="title">Books on the Bay</h3>
+          <p class="loc">Hermanus</p>
+        </div>
+      </li>
     </ul>
     <h2>April</h2>
     <ul>
@@ -216,6 +231,15 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
           <p class="author">Book to be announced</p>
           <p class="host">Elzette</p>
           <p class="venue tbc">To be confirmed</p>
+        </div>
+      </li>
+      <li class="mtg festival" data-end="2027-05-16">
+        <div class="when"><div class="day-line">Fri–Sun</div><div class="date-num range">14–16</div></div>
+        <div class="what">
+          <span class="badge festival">Festival</span>
+          <h3 class="title">Franschhoek Literary Festival</h3>
+          <p class="loc">Franschhoek</p>
+          <p class="accom">Organised by Ann-Maree</p>
         </div>
       </li>
     </ul>
@@ -261,6 +285,14 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
 
     <h2>September</h2>
     <ul>
+      <li class="mtg festival" data-end="2027-09-05">
+        <div class="when"><div class="day-line">Fri–Sun</div><div class="date-num range">3–5</div></div>
+        <div class="what">
+          <span class="badge festival">Festival</span>
+          <h3 class="title">Open Book Festival</h3>
+          <p class="loc">Cape Town</p>
+        </div>
+      </li>
       <li class="mtg" data-end="2027-09-11">
         <div class="when"><div class="day-line">Sat</div><div class="date-num">11</div></div>
         <div class="what">
@@ -358,6 +390,31 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
         </div>
       </li>
     </ul>
+    <h2>Festivals</h2>
+    <ul>
+      <li class="mtg festival">
+        <div class="when"><div class="day-line">Mar, Fri–Sun</div><div class="date-num range">19–21</div></div>
+        <div class="what">
+          <h3 class="title">Books on the Bay</h3>
+          <p class="loc">Hermanus</p>
+        </div>
+      </li>
+      <li class="mtg festival">
+        <div class="when"><div class="day-line">May, Fri–Sun</div><div class="date-num range">14–16</div></div>
+        <div class="what">
+          <h3 class="title">Franschhoek Literary Festival</h3>
+          <p class="loc">Franschhoek</p>
+          <p class="accom">Organised by Ann-Maree</p>
+        </div>
+      </li>
+      <li class="mtg festival">
+        <div class="when"><div class="day-line">Sep, Fri–Sun</div><div class="date-num range">3–5</div></div>
+        <div class="what">
+          <h3 class="title">Open Book Festival</h3>
+          <p class="loc">Cape Town</p>
+        </div>
+      </li>
+    </ul>
   </main>
 
   <footer>Last updated 24 November 2026. Books and venues for the later months will be added as they are chosen. Dates shaded amber still need a host.</footer>
@@ -374,7 +431,7 @@ footer { margin-top: 36px; font-size: 13px; color: var(--muted); }
       var end = el.getAttribute("data-end");
       if (end < today) {
         el.classList.add("past");
-      } else if (!nextDone && !el.classList.contains("potential")) {
+      } else if (!nextDone && !el.classList.contains("potential") && !el.classList.contains("festival")) {
         nextDone = true;
         el.classList.add("next");
         var b = document.createElement("span");
